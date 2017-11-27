@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
 
     packagingOptions {
         exclude 'LICENSE.txt'
@@ -13,8 +13,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 21
         // use version to define a version code.
         versionCode 804
         version "0.8.04"
@@ -73,11 +73,11 @@ android {
             resValue "string", "git_sdk_revision_date", "\"${gitRevisionDate()}\""
 
             libraryVariants.all { variant ->
-                variant.outputs.each { output ->
+                variant.outputs.all { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.aar')) {
                         def fileName = outputFile.name.replace(".aar", "-${version}.aar")
-                        output.outputFile = new File(outputFile.parent, fileName)
+                        output.outputFileName = new File(outputFile.parent, fileName)
                     }
                 }
             }

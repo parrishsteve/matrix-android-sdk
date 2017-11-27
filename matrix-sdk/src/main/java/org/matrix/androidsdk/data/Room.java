@@ -2349,8 +2349,16 @@ public class Room {
             mDataHandler.updateEventState(event, Event.SentState.SENDING);
 
             if (Event.EVENT_TYPE_MESSAGE.equals(event.getType())) {
-                mDataHandler.getDataRetriever().getRoomsRestClient().sendMessage(event.originServerTs + "", getRoomId(), JsonUtils.toMessage(event.getContent()), localCB);
-            } else {
+                Message message = JsonUtils.toMessage(event.getContent());
+                if (message.msgtype.equals(Message.MSGTYPE_TEXT + ".com.partstown")) {
+                    mDataHandler.getDataRetriever().getRoomsRestClient().sendEventToRoom(event.originServerTs + "",
+                            getRoomId(), event.getType(), event.getContent().getAsJsonObject(), localCB);
+                }
+                else {
+                    mDataHandler.getDataRetriever().getRoomsRestClient().sendMessage(event.originServerTs + "", getRoomId(), message, localCB);
+                }
+            }
+            else {
                 mDataHandler.getDataRetriever().getRoomsRestClient().sendEventToRoom(event.originServerTs + "", getRoomId(), event.getType(), event.getContent().getAsJsonObject(), localCB);
             }
         }
