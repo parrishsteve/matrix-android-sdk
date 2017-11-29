@@ -233,7 +233,7 @@ public class MXFileStore extends MXMemoryStore {
         // create the metadata file if it does not exist
         // either there is no store
         // or the store was not properly initialised (the application crashed during the initialsync)
-        //if ((null == mMetadata) || (null == mMetadata.mAccessToken)) {
+        if ((null == mMetadata) || (null == mMetadata.mAccessToken)) {
             mIsNewStorage = true;
             mIsOpening = true;
             mHandlerThread.start();
@@ -252,7 +252,7 @@ public class MXFileStore extends MXMemoryStore {
             // nothing to load so ready to work
             mIsReady = true;
             mAreReceiptsReady = true;
-        //}
+        }
     }
 
     /**
